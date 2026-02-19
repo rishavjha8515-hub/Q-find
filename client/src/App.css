@@ -71,12 +71,6 @@ body {
 
 .landmark-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minimax(160px, 1fr));
-  gap: 12px;
-}
-
-.landmark-grid{
-  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px;
 }
@@ -212,7 +206,7 @@ body {
 
 .countdown-fill{
   height: 100%;
-  background: liner-gradient(90deg, #00f5d4, #9b5de5);
+  background: linear-gradient(90deg, #00f5d4, #9b5de5);
   border-radius: 3px;
   transition: width 1s linear;
 }
@@ -332,6 +326,6 @@ body {
   }
 
   .countdown-timer {
-    font-size: 3
+    font-size: 32px;
   }
 }
