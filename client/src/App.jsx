@@ -3,7 +3,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { Scanner } from "./components/Scanner";
 import "./App.css";
 
-const API = "http://localhost:3000";
+const API = "http://192.168.216.148:3000";
 
 function App() {
   const [tab, setTab] = useState("generator"); // "generator" or "scanner"

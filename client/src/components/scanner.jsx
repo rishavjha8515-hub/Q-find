@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
 import "./Scanner.css";
 
-const API = "http://localhost:3000";
+const API = "http://192.168.216.148:3000";
 
 export function Scanner() {
   const videoRef = useRef(null);
@@ -60,7 +60,7 @@ export function Scanner() {
       return;
     }
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     
