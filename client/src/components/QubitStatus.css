@@ -1,0 +1,243 @@
+.qubit-status {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: #4a6080;
+    letter-spacing: 3px;
+}
+
+.team-id input {
+    background: #0d1256;
+    border: 1px solid #1a2a45;
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: #c8d8f0;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 200px;
+}
+
+.team-id-input:focus {
+    border-color: #00f5d4;
+}
+
+.my-team-section{
+    margin-bottom: 40px;
+}
+
+.my-qubit-card {
+    background: #080d18;
+    border: 2px solid #1a2a45;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+}
+
+.qubit-display {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.qubit-stats{
+    max-width: 400px;
+    margin: 0 auto 24px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background:#0d1256;
+    border: 1 px solid #1a2a45;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-family: 'Courier New' , monospace;
+    font-size: 13px;
+}
+
+.stat-label {
+    color: #4a6080;
+}
+
+.stat-value {
+    color: #c8d8f0;
+    font-weight: bold;
+}
+
+.stat-value.active {
+    color: #00f5d4;
+}
+
+.stat-value.locked {
+    color: #ff4d6d;
+}
+
+.decay-formula {
+    background: rgba(155, 93, 229, 0.1);
+    border: 1px solid rgba(155, 93, 229, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #9b5de5;
+    margin-bottom: 24px;
+}
+
+.unlock-btn {
+    width: 100%;
+    max-width: 400px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #ff4d6d, #f15bb5);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    animation: pulse-btn 2s ease-in-out infinite;
+}
+
+@keyframes pulse-btn {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(255, 77, 109, 0.6);
+    }
+}
+
+.unlock-btn:hover {
+    transform: translateY();
+    box-shadow: 0 8px 30px rgba(255, 77, 109, 0.6)
+}
+
+.loading-qubit {
+   text-align: center;
+  padding: 60px 20px;
+  color: #4a6080;
+  font-size: 14px;
+  font-family: 'Courier New', monospace; 
+}
+
+.all-teams-section h2 {
+   font-family: 'Orbitron', sans-serif;
+   font-size: 14px;
+   color: #4a6080;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #1a2a45;
+}
+
+.no-teams {
+    text-align: center;
+    padding: 60px 20px;
+    color: #4a6080;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minimax(200px, 1fr));
+    gap: 16px;
+}
+
+.team-card {
+    background: #080d18;
+    border: 1px solid #1a2a45;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.team-card:hover {
+    border-color: #00f5d4;
+    transform: translateY(-2px);
+}
+
+.team-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.team-name {
+    font-family:'Courier New', Courier, monospace;
+    font-size: 12px;
+    color:#c8d8f0;
+    font-weight: bold;
+}
+
+.lock-icon {
+    font-size: 14px;
+}
+
+.team-stats {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.mini-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.mini-stat span:first-child {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color:#00f5d4;
+}
+
+.mini-stat span:last-child {
+    font-size: 10px;
+    color: #4a6080;
+    letter-spacing: 1px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .team-id-input {
+        width:100%
+    }
+
+    .teams-grid {
+        grid-template-columns: 1fr 1 fr;
+    }
+
+    .qubit-display {
+        transform: scale(0.9);
+    }
+}
