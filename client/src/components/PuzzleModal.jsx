@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./PuzzleModal.css";
 
-const API = "http://192.168.216.148:3000";
+const API = "http://192.168.34.148:3000";
 
 export function PuzzleModal({ teamId, onClose, onSuccess }) {
     const [puzzle, setPuzzle] = useState(null);
@@ -16,35 +16,40 @@ export function PuzzleModal({ teamId, onClose, onSuccess }) {
       .catch(console.error);
   }, []);
 
-  const submitAnswer = async () => {
-    if (selecetedAnswer === null) return;
-
-    setloading(true);
-    try{
-        const res = await fetch(`${API}/api/qubit/puzzle/validate`, {
-            method: "POST",
-            headers: { "Content-Type": "aplication/json" },
-            body: JSON.stringify({
-                teamId,
-                puzzleId: puzzle.id,
-                answerIndex: selectedAnswer,
-              })
-            });
-
-            const data = await res.json();
-            setResult(data);
-
-            if (data.valid) {
-                setTimeout(() => {
-                    onSuccess && onSuccess(data);
-                    onClose && onClose();
-                }, 2000);
-            }
-    } catch (err) {
-       console.error("Puzzle validation error", err);
+ const submitAnswer = async () => {
+  if (selectedAnswer === null) return;
+  
+  setloading(true);
+  try {
+    const res = await fetch(`${API}/api/qubit/puzzle/validate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        teamId: teamId,
+        puzzleId: puzzle.id,
+        answerIndex: selectedAnswer
+      })
+    });
+    
+    const data = await res.json();
+    setResult(data);
+    
+    if (data.valid) {
+      setTimeout(() => {
+        onSuccess && onSuccess(data);
+        onClose && onClose();
+      }, 2000);
     }
-     setloading(false);
-  };
+  } catch (err) {
+    console.error("Puzzle validation error:", err);
+    setResult({
+      valid: false,
+      message: "Network error. Try again."
+    });
+  }
+  setloading(false);
+};
+
   if (!puzzle) {
     return ( 
         <div className="puzzle-modal-overlay">

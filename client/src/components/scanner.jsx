@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
 import "./Scanner.css";
 
-const API = "http://192.168.216.148:3000";
+const API = "http://192.168.34.148:3000"; // UPDATE WITH YOUR IP
 
 export function Scanner() {
   const videoRef = useRef(null);
@@ -11,6 +11,8 @@ export function Scanner() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
+  const [teamId, setTeamId] = useState("TEAM_TEST");
+  const [qubitStatus, setQubitStatus] = useState(null);
   const scanIntervalRef = useRef(null);
 
   // Start camera
@@ -19,7 +21,7 @@ export function Scanner() {
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { 
-          facingMode: "environment", // rear camera
+          facingMode: "environment",
           width: { ideal: 1280 },
           height: { ideal: 720 }
         }
@@ -71,7 +73,7 @@ export function Scanner() {
       inversionAttempts: "dontInvert",
     });
 
-    if (code) {
+    if (code && code.data) {
       handleQRDetected(code.data);
     }
   };
@@ -98,9 +100,29 @@ export function Scanner() {
       clearInterval(scanIntervalRef.current);
     }
 
-    // Validate with backend
+    // Check if qubit is locked
     try {
-      // We need to get the full hash from the backend first
+      const qubitRes = await fetch(`${API}/api/qubit/${teamId}`);
+      const qubitData = await qubitRes.json();
+      
+      if (qubitData.locked) {
+        setResult({
+          valid: false,
+          message: "🔒 Scanner locked due to decoherence. Solve error correction puzzle first.",
+          qubitStatus: qubitData
+        });
+        setTimeout(() => {
+          setResult(null);
+          setScanning(true);
+        }, 3000);
+        return;
+      }
+    } catch (err) {
+      console.error("Qubit check error:", err);
+    }
+
+    // Get full hash from backend and validate
+    try {
       const qrRes = await fetch(`${API}/api/qr/${landmarkId}`);
       const qrInfo = await qrRes.json();
       
@@ -108,14 +130,35 @@ export function Scanner() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          hash: qrInfo.hash, // use full hash from server
+          hash: qrInfo.hash,
           landmarkId,
-          teamId: "SCANNER_TEST"
+          teamId
         })
       });
       
       const data = await res.json();
-      setResult(data);
+      
+      if (data.valid) {
+        // Trigger qubit check-in
+        const checkinRes = await fetch(`${API}/api/qubit/checkin`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            teamId,
+            landmarkId,
+            position: { lat: 0, lng: 0 } // Could use geolocation API here
+          })
+        });
+        
+        const checkinData = await checkinRes.json();
+        
+        setResult({
+          ...data,
+          qubitStatus: checkinData
+        });
+      } else {
+        setResult(data);
+      }
       
       // Auto-resume scanning after 3 seconds
       setTimeout(() => {
@@ -135,7 +178,7 @@ export function Scanner() {
   // Scan loop
   useEffect(() => {
     if (scanning && cameraReady) {
-      scanIntervalRef.current = setInterval(scanFrame, 300); // scan every 300ms
+      scanIntervalRef.current = setInterval(scanFrame, 300);
     }
     return () => {
       if (scanIntervalRef.current) {
@@ -149,12 +192,58 @@ export function Scanner() {
     return () => stopCamera();
   }, []);
 
+  // Fetch qubit status periodically
+  useEffect(() => {
+    const fetchQubit = async () => {
+      try {
+        const res = await fetch(`${API}/api/qubit/${teamId}`);
+        const data = await res.json();
+        setQubitStatus(data);
+      } catch (err) {
+        console.error("Failed to fetch qubit:", err);
+      }
+    };
+
+    fetchQubit();
+    const interval = setInterval(fetchQubit, 5000);
+    return () => clearInterval(interval);
+  }, [teamId]);
+
   return (
     <div className="scanner-container">
       <div className="scanner-header">
         <h2>📱 QR Scanner</h2>
         <p>Point your camera at a Q-Find QR code</p>
       </div>
+
+      {/* Team ID Input */}
+      <div className="team-input-section">
+        <label>Team ID:</label>
+        <input
+          type="text"
+          className="team-input"
+          value={teamId}
+          onChange={(e) => setTeamId(e.target.value)}
+          disabled={cameraReady}
+        />
+      </div>
+
+      {/* Qubit Status Display */}
+      {qubitStatus && (
+        <div className={`qubit-status-bar ${qubitStatus.locked ? "locked" : ""}`}>
+          <div className="qubit-status-label">Qubit Stability:</div>
+          <div className="qubit-status-bar-fill">
+            <div
+              className="qubit-status-fill"
+              style={{ width: `${qubitStatus.stability}%` }}
+            />
+          </div>
+          <div className="qubit-status-value">
+            {Math.round(qubitStatus.stability)}%
+          </div>
+          {qubitStatus.locked && <span className="lock-badge">🔒 LOCKED</span>}
+        </div>
+      )}
 
       {error && (
         <div className="scanner-error">
@@ -209,6 +298,16 @@ export function Scanner() {
               <div className="result-zone">{result.landmark.zone}</div>
             </div>
           )}
+          {result.qubitStatus && (
+            <div className="result-qubit">
+              <div className="qubit-info">
+                Stability: <strong>{Math.round(result.qubitStatus.stability)}%</strong>
+              </div>
+              <div className="qubit-info">
+                Checkpoints: <strong>{result.qubitStatus.checkpoints}</strong>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -228,13 +327,13 @@ export function Scanner() {
         <div className="info-item">
           <span className="info-label">How it works:</span>
           <span className="info-text">
-            Camera captures frames every 300ms → jsQR decodes QR → Backend validates hash
+            Scan QR → Validate hash → Update qubit stability (+20% boost)
           </span>
         </div>
         <div className="info-item">
-          <span className="info-label">Hash window:</span>
+          <span className="info-label">Locked scanner:</span>
           <span className="info-text">
-            Accepts ±1 minute for clock drift (3 valid windows total)
+            If stability hits 0%, solve error correction puzzle to unlock
           </span>
         </div>
       </div>

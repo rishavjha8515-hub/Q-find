@@ -40,8 +40,8 @@ export function QubitRing({ stability, size=180, teamName = ""}) {
                     {Math.round(stability)}%
                     </div>
                 <div className="qubit-label">STABILITY</div>
-                {teamNAME && <div classNAME="qubit-team">{teamName}</div>}
-                </div>
+               {teamName && <div className="qubit-team">{teamName}</div>}
+               </div>
             </div>
     );
 }

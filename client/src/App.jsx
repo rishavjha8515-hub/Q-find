@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { QRCodeSVG } from "qrcode.react";
+import QRCode from "react-qr-code";
 import { Scanner } from "./components/Scanner";
+import { QubitStatus } from "./components/QubitStatus";
+import { TeamDashboard } from "./components/TeamDashboard";
 import "./App.css";
 
-const API = "http://192.168.216.148:3000";
+const API = "http://192.168.34.148:3000"; // UPDATE WITH YOUR IP
 
 function App() {
-  const [tab, setTab] = useState("generator"); // "generator" or "scanner"
+  const [tab, setTab] = useState("generator"); // "generator", "scanner", "qubit", "dashboard"
   const [landmarks, setLandmarks] = useState([]);
   const [selected, setSelected] = useState(null);
   const [qrData, setQrData] = useState(null);
@@ -64,7 +66,7 @@ function App() {
     <div className="app">
       <header className="header">
         <div className="logo">⬡ Q-FIND</div>
-        <div className="subtitle">Day 5 · QR Scanner</div>
+        <div className="subtitle">Quantum Scavenger Hunt · NYC</div>
       </header>
 
       <nav className="tabs">
@@ -72,13 +74,29 @@ function App() {
           className={`tab ${tab === "generator" ? "active" : ""}`}
           onClick={() => setTab("generator")}
         >
-          🖼️ QR Generator
+          <span className="tab-icon">🖼️</span>
+          <span className="tab-label">QR Generator</span>
         </button>
         <button
           className={`tab ${tab === "scanner" ? "active" : ""}`}
           onClick={() => setTab("scanner")}
         >
-          📱 QR Scanner
+          <span className="tab-icon">📱</span>
+          <span className="tab-label">Scanner</span>
+        </button>
+        <button
+          className={`tab ${tab === "qubit" ? "active" : ""}`}
+          onClick={() => setTab("qubit")}
+        >
+          <span className="tab-icon">⚛️</span>
+          <span className="tab-label">Qubit Status</span>
+        </button>
+        <button
+          className={`tab ${tab === "dashboard" ? "active" : ""}`}
+          onClick={() => setTab("dashboard")}
+        >
+          <span className="tab-icon">📊</span>
+          <span className="tab-label">Leaderboard</span>
         </button>
       </nav>
 
@@ -114,7 +132,7 @@ function App() {
                 ) : qrData ? (
                   <>
                     <div className="qr-container">
-                      <QRCodeSVG value={qrData.qrData} size={200} level="M" />
+                      <QRCode value={qrData.qrData} size={200} />
                     </div>
 
                     <div className="countdown-section">
@@ -166,11 +184,23 @@ function App() {
             <Scanner />
           </div>
         )}
+
+        {tab === "qubit" && (
+          <div className="card">
+            <QubitStatus />
+          </div>
+        )}
+
+        {tab === "dashboard" && (
+          <div className="card">
+            <TeamDashboard />
+          </div>
+        )}
       </main>
 
       <footer className="footer">
         <div className="checkpoint">
-          ✓ Day 5 Complete: Phone camera QR scanner · Real-time validation · Ready for Manhattan
+          ✓ Q-Find Complete: SHA-256 QR Engine · Phone Scanner · Qubit Decoherence · Live Leaderboard
         </div>
       </footer>
     </div>

@@ -21,6 +21,134 @@
   letter-spacing: 1px;
 }
 
+/* Team Input */
+.team-input-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #0d1526;
+  border: 1px solid #1a2a45;
+  border-radius: 8px;
+}
+
+.team-input-section label {
+  font-size: 12px;
+  color: #4a6080;
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+}
+
+.team-input {
+  flex: 1;
+  background: #080d18;
+  border: 1px solid #1a2a45;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #c8d8f0;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.team-input:focus {
+  border-color: #00f5d4;
+}
+
+.team-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Qubit Status Bar */
+.qubit-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(0, 245, 212, 0.05);
+  border: 1px solid rgba(0, 245, 212, 0.2);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.qubit-status-bar.locked {
+  background: rgba(255, 77, 109, 0.05);
+  border-color: rgba(255, 77, 109, 0.3);
+}
+
+.qubit-status-label {
+  font-size: 11px;
+  color: #4a6080;
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+  white-space: nowrap;
+}
+
+.qubit-status-bar-fill {
+  flex: 1;
+  height: 8px;
+  background: #1a2a45;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.qubit-status-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00f5d4, #9b5de5);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.qubit-status-bar.locked .qubit-status-fill {
+  background: #ff4d6d;
+}
+
+.qubit-status-value {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00f5d4;
+  font-family: 'Orbitron', sans-serif;
+  min-width: 50px;
+  text-align: right;
+}
+
+.qubit-status-bar.locked .qubit-status-value {
+  color: #ff4d6d;
+}
+
+.lock-badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  background: rgba(255, 77, 109, 0.2);
+  border-radius: 4px;
+  color: #ff4d6d;
+  font-family: 'Courier New', monospace;
+}
+
+/* Result Qubit Info */
+.result-qubit {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 245, 212, 0.2);
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.qubit-info {
+  font-size: 12px;
+  color: #4a6080;
+  font-family: 'Courier New', monospace;
+}
+
+.qubit-info strong {
+  color: #00f5d4;
+  font-size: 14px;
+}
+
 .scanner-error {
   background: rgba(255, 77, 109, 0.1);
   border: 1px solid #ff4d6d;
