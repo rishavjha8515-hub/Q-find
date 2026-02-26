@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
-import { Scanner } from "./components/Scanner";
+import { Scanner } from "./components/scanner";
 import { QubitStatus } from "./components/QubitStatus";
 import { TeamDashboard } from "./components/TeamDashboard";
 import "./App.css";
 
-const API = "http://192.168.34.148:3000"; // UPDATE WITH YOUR IP
+const API = "http:// 172.24.150.148:3000"; // UPDATE WITH YOUR IP
 
 function App() {
   const [tab, setTab] = useState("generator"); // "generator", "scanner", "qubit", "dashboard"

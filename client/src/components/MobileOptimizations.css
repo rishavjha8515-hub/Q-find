@@ -1,0 +1,297 @@
+
+
+/* Prevent iOS zoom on input focus */
+@supports (-webkit-touch-callout: none) {
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px !important;
+  }
+}
+
+/* Touch-friendly tap targets */
+.landmark-card,
+.tab,
+.puzzle-option,
+.control-btn,
+.refresh-btn,
+.puzzle-btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Prevent text selection on tap */
+.tab,
+.landmark-card,
+.stat-card,
+.team-card {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better mobile viewport */
+@media (max-width: 768px) {
+  body {
+    overscroll-behavior: none;
+  }
+
+  .main {
+    padding: 20px 16px;
+  }
+
+  .header {
+    padding: 16px 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+    letter-spacing: 3px;
+  }
+
+  .subtitle {
+    font-size: 10px;
+    padding: 3px 10px;
+  }
+
+  /* Tabs - horizontal scroll */
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    min-width: 100px;
+    padding: 12px 16px;
+  }
+
+  .tab-icon {
+    font-size: 18px;
+  }
+
+  .tab-label {
+    font-size: 9px;
+  }
+
+  /* Landmark grid - 2 columns on mobile */
+  .landmark-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px;
+  }
+
+  .landmark-card {
+    padding: 12px;
+  }
+
+  .lm-id {
+    font-size: 10px;
+  }
+
+  .lm-name {
+    font-size: 11px;
+  }
+
+  .lm-zone {
+    font-size: 9px;
+  }
+
+  /* QR Code - slightly smaller */
+  .qr-container {
+    padding: 16px;
+  }
+
+  .qr-container canvas {
+    max-width: 180px !important;
+  }
+
+  /* Countdown timer */
+  .countdown-timer {
+    font-size: 40px;
+  }
+
+  /* Hash sections - break long text */
+  .hash-value {
+    font-size: 11px;
+    word-break: break-all;
+    line-height: 1.6;
+  }
+
+  /* Stats grid - stack vertically */
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Scanner optimizations */
+  .camera-container {
+    aspect-ratio: 4/3;
+  }
+
+  .scanner-frame {
+    width: 240px;
+    height: 240px;
+  }
+
+  /* Qubit ring - smaller */
+  .qubit-ring {
+    transform: scale(0.85);
+  }
+
+  /* Puzzle modal - full height */
+  .puzzle-modal {
+    max-height: 95vh;
+    max-width: 95vw;
+  }
+
+  .puzzle-question {
+    font-size: 14px;
+  }
+
+  .puzzle-option {
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+
+  /* Dashboard - single column */
+  .stats-overview {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .stat-value {
+    font-size: 28px;
+  }
+
+  /* Leaderboard - compact */
+  .leaderboard-header,
+  .leaderboard-row {
+    grid-template-columns: 50px 1fr 60px 80px !important;
+    gap: 8px;
+    padding: 12px 12px;
+    font-size: 11px;
+  }
+
+  .team-name {
+    font-size: 12px;
+  }
+
+  .checks-value {
+    font-size: 16px;
+  }
+
+  /* Hide less critical columns on small screens */
+  .col-checks {
+    display: none;
+  }
+
+  /* Formula display - smaller text */
+  .formula-text {
+    font-size: 16px;
+  }
+
+  .formula-explanation {
+    font-size: 12px;
+  }
+}
+
+/* Very small screens (iPhone SE, etc) */
+@media (max-width: 375px) {
+  .landmark-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .tabs {
+    gap: 0;
+  }
+
+  .tab {
+    min-width: 80px;
+    padding: 10px 12px;
+  }
+
+  .tab-icon {
+    font-size: 16px;
+  }
+
+  .tab-label {
+    font-size: 8px;
+  }
+
+  .countdown-timer {
+    font-size: 32px;
+  }
+
+  .scanner-frame {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .header {
+    padding: 12px 20px;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .camera-container {
+    max-height: 60vh;
+  }
+}
+
+/* PWA-specific optimizations */
+@media (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  /* Already dark, but ensure contrast */
+  body {
+    background: #000;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+
+  .landmark-card,
+  .team-card,
+  .stat-card {
+    border-width: 2px;
+  }
+}
