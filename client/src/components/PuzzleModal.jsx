@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./PuzzleModal.css";
 
-const API = "http:// 172.24.150.148:3000";
+const API = "http://192.168.34.148:3000";
 
 export function PuzzleModal({ teamId, onClose, onSuccess }) {
     const [puzzle, setPuzzle] = useState(null);

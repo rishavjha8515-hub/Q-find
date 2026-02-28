@@ -58,7 +58,7 @@ function initWebSocket(server) {
 
   // Broadcast qubit updates every 5 seconds
   setInterval(() => {
-    broadcastQubitUpdates();
+    broadcastQubitUpadets();
   }, 5000);
 
   console.log("✓ WebSocket server initialized on /ws");

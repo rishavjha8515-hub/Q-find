@@ -25,6 +25,9 @@ app.get("/api/health", (req, res) => {
 });
 
 const { getAllTeams } = require("./qubit/engine");
+const { initWebSocket } = require("./ws/websocket");
+
+initWebSocket(server);
 
 setInterval(() => {
     const teams = getAllTeams();

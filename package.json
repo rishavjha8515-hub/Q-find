@@ -4,7 +4,8 @@
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "qrcode.react": "^4.2.0"
+    "qrcode.react": "^4.2.0",
+    "ws": "^8.19.0"
   },
   "scripts": {
     "dev:client": "cd client && npm run dev",

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
 import "./Scanner.css";
 
-const API = "http:// 172.24.150.148:3000"; // UPDATE WITH YOUR IP
+const API = "http://192.168.34.148:3000"; // UPDATE WITH YOUR IP
 
 export function Scanner() {
   const videoRef = useRef(null);
