@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const WS_URL = "ws://192.168.34.148/ws";
+const WS_URL = "ws://192.168.126.148/ws";
 
 export function useWebsocket(teamId = null) {
     const [connected, setConnected] = useState(false);

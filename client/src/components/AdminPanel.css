@@ -1,0 +1,398 @@
+.admin-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+}
+
+.login-card {
+    background: linear-gradient(135deg, #0d1526, #06101e);
+    border: 2px solid #ff4d6d;
+    border: 16px;
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255, 77, 109, 0.3);
+}
+
+.login-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.login-card h2 {
+    font-size: 20px;
+    font-family: 'Orbitron', sans-serif;
+    color: #ff4d6d;
+    letter-spacing: 3px;
+    margin: 0 0 8px 0;
+}
+
+.login-card p {
+    font-family: #4a6080;
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.password-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #080108;
+    border: 1px solid #1a2a45;
+    border-radius: 8px;
+    color: #c8d8f0;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 16px;
+}
+
+.password-input:focus {
+    border-color: #ff4d6d;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #ff4d6d, #f15bb5);
+    border:none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 77, 109, 0.5);
+}
+
+.login-message {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.login-message.success {
+    background: rgba(0, 245, 212, 0.1);
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    color: #00f5d4;
+}
+
+.login-message.error {
+    background: rgba(255, 77, 109, 0.1);
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    color: #ff4d6d;
+}
+
+/* Admin Panel */
+admin-panel {
+   max-width: 1200px;
+   margin: 0 auto;
+}
+
+.admin-header {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom:  1px solid #1a2a45;
+}
+
+.admin-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    color: #ff4d6d;
+    letter-spacing: 3px;
+    margin: 0;
+}
+
+.admin-status {
+    display:flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ws-status {
+    font-size: 12px;
+    color: #4a6080;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.ws-status.connected {
+    color: #00f5d4;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    background: #0d1526;
+    border: 1px solid #1a2a45;
+    border-radius: 6px;
+    color: #c8d8f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    border-color: #ff4d6d;
+    color: #ff4d6d;
+}
+
+.admin-messsage {
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-family:'Courier New', Courier, monospace;
+    animation: slideIn 0.3s ease;
+}
+
+.admin-messsage.success {
+    background: rgba(0, 245, 212, 0.1);
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    color: #00f5d4;
+}
+
+.admin-message.error {
+    background: rgba(255, 77, 109, 0.1);
+    border: 1px solid rgba(255, 77, 109, 0.3);
+    color: #00f5d4;
+}
+
+.admin-message.info {
+    background: rgba(155, 93, 229, 0.1);
+    border: 1px solid rgba(155, 93, 229, 0.3);
+    color: #9b5de5;
+}
+
+.close-message {
+    background:none;
+    border: none;
+    color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2sl
+}
+
+.close-message:hover {
+    opacity: 1;
+}
+
+/* Sections */
+.admin-section {
+    background: #0d1526;
+    border: 1px solid #1a2a45;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.admin-section h3 {
+    font-family:'Orbitrom', sans-serif;
+    font-size: 14px;
+    color: #9b5de5;
+    letter-spacing: 2px;
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #1a2a45;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: 12px 20px;
+    background: #080d18;
+    border: 1px solid #1a2a45;
+    border-radius: 8px;
+    color: #c8d8f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    border-color: #9b5de5;
+    color:#9b5de5;
+    background: rgba(155, 93, 229, 0.1);
+}
+
+.action-btn.danger {
+    border-color: rgba(255, 77, 109, 0.3);
+    color:#ff4d6d;
+}
+
+.action-btn.danger:hover {
+    border-color: #ff4d6d;
+    background: rgba(255, 77, 109,  0.1);
+}
+
+/* Teams List */
+.teams-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.team-admin-card {
+    background: #080d18;
+    border: 1px solid #1a2a45;
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.team-admin-card:hover {
+    border-color: #9b5de5;
+}
+
+.teams-admin-card.selecetd {
+    border-color: #9b5de5;
+    background: rgba(155, 93, 229, 0.05);
+}
+
+.team-admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.team-admin-id {
+    font-family:'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bold;
+    color: #c8d8f0;
+}
+
+.team-admin-stability {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.team-admin-stats {
+    display:flex;
+    gap: 16px;
+    font-size: 11px;
+    color: #4a6080;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.team-admin-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #1a2a45;
+    flex-wrap: wrap;
+}
+
+.admin-section-btn {
+    padding: 8px 12px;
+    background: #0d1526;
+    border: 1px solid #1a2a45;
+    border-radius: 6px;
+    color: #c8d8f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.admin-action-btn:hover:not(:disabled) {
+    border-color: #00f5d4;
+    color: #00f5d4;
+}
+
+.admin-action-btn.danger {
+    border-color: rgba(255, 77, 109, 0.3);
+    color: #ff4d6d;
+}
+
+.admin-action-btn.danger:hover {
+    border-color: #ff4d6d;
+    background: rgba(255, 77, 109, 0.1);
+}
+
+.admin-action-btn.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* System Info */
+.system-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #080d18;
+    border: 1px solid #1a2a45;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.info-row span:first-child {
+    color: #4a6080;
+}
+
+.info-row span:last-child {
+    color: #c8d8f0;
+    font-weight: bold;
+}
+
+.no-teams-admin {
+   text-align: center;
+   padding: 40px;
+   color: #4a6080;
+   font-size: 13px;
+   font-family:'Courier New', Courier, monospace;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width:100%;
+    }
+
+    .team-admin-actions {
+        flex-direction: column;
+    }
+
+    .admin-action-btn {
+        width: 100%;
+    }
+}

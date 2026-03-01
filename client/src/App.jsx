@@ -5,7 +5,7 @@ import { QubitStatus } from "./components/QubitStatus";
 import { TeamDashboard } from "./components/TeamDashboard";
 import "./App.css";
 
-const API = "http://192.168.34.148:3000"; // UPDATE WITH YOUR IP
+const API = "http://192.168.126.148:3000"; // UPDATE WITH YOUR IP
 
 function App() {
   const [tab, setTab] = useState("generator"); // "generator", "scanner", "qubit", "dashboard"
