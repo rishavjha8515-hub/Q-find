@@ -1,19 +1,26 @@
 import { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
-import { Scanner } from "./components/scanner";
+import { Scanner } from "./components/Scanner";
 import { QubitStatus } from "./components/QubitStatus";
 import { TeamDashboard } from "./components/TeamDashboard";
+import { Analytics } from "./components/Analytics";
+import { AdminPanel } from "./components/AdminPanel";
+import { SettingsPanel } from "./components/SettingsPanel";
+import { GPSTracker } from "./components/GPSTracker";
+import soundSystem from "./utils/sounds";
 import "./App.css";
 
 const API = "http://192.168.126.148:3000"; // UPDATE WITH YOUR IP
 
 function App() {
-  const [tab, setTab] = useState("generator"); // "generator", "scanner", "qubit", "dashboard"
+  const [tab, setTab] = useState("generator");
   const [landmarks, setLandmarks] = useState([]);
   const [selected, setSelected] = useState(null);
   const [qrData, setQrData] = useState(null);
   const [countdown, setCountdown] = useState(60);
   const [loading, setLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [gpsLocation, setGpsLocation] = useState(null);
 
   // Load landmarks on mount
   useEffect(() => {
@@ -39,7 +46,6 @@ function App() {
     const interval = setInterval(() => {
       const secs = 60 - (Math.floor(Date.now() / 1000) % 60);
       setCountdown(secs);
-      // Auto-refresh when window expires
       if (secs === 60 && selected && tab === "generator") {
         fetchQR();
       }
@@ -60,6 +66,11 @@ function App() {
     setLoading(false);
   };
 
+  const changeTab = (newTab) => {
+    setTab(newTab);
+    soundSystem.click();
+  };
+
   const lm = landmarks.find((l) => l.id === selected);
 
   return (
@@ -67,36 +78,64 @@ function App() {
       <header className="header">
         <div className="logo">⬡ Q-FIND</div>
         <div className="subtitle">Quantum Scavenger Hunt · NYC</div>
+        <button 
+          className="settings-btn"
+          onClick={() => setShowSettings(true)}
+          title="Settings"
+        >
+          ⚙️
+        </button>
       </header>
 
       <nav className="tabs">
         <button
           className={`tab ${tab === "generator" ? "active" : ""}`}
-          onClick={() => setTab("generator")}
+          onClick={() => changeTab("generator")}
         >
           <span className="tab-icon">🖼️</span>
-          <span className="tab-label">QR Generator</span>
+          <span className="tab-label">Generator</span>
         </button>
         <button
           className={`tab ${tab === "scanner" ? "active" : ""}`}
-          onClick={() => setTab("scanner")}
+          onClick={() => changeTab("scanner")}
         >
           <span className="tab-icon">📱</span>
           <span className="tab-label">Scanner</span>
         </button>
         <button
           className={`tab ${tab === "qubit" ? "active" : ""}`}
-          onClick={() => setTab("qubit")}
+          onClick={() => changeTab("qubit")}
         >
           <span className="tab-icon">⚛️</span>
-          <span className="tab-label">Qubit Status</span>
+          <span className="tab-label">Qubit</span>
         </button>
         <button
           className={`tab ${tab === "dashboard" ? "active" : ""}`}
-          onClick={() => setTab("dashboard")}
+          onClick={() => changeTab("dashboard")}
         >
           <span className="tab-icon">📊</span>
           <span className="tab-label">Leaderboard</span>
+        </button>
+        <button
+          className={`tab ${tab === "analytics" ? "active" : ""}`}
+          onClick={() => changeTab("analytics")}
+        >
+          <span className="tab-icon">📈</span>
+          <span className="tab-label">Analytics</span>
+        </button>
+        <button
+          className={`tab ${tab === "gps" ? "active" : ""}`}
+          onClick={() => changeTab("gps")}
+        >
+          <span className="tab-icon">📍</span>
+          <span className="tab-label">GPS</span>
+        </button>
+        <button
+          className={`tab ${tab === "admin" ? "active" : ""}`}
+          onClick={() => changeTab("admin")}
+        >
+          <span className="tab-icon">🔧</span>
+          <span className="tab-label">Admin</span>
         </button>
       </nav>
 
@@ -110,7 +149,10 @@ function App() {
                   <div
                     key={landmark.id}
                     className={`landmark-card ${selected === landmark.id ? "active" : ""}`}
-                    onClick={() => setSelected(landmark.id)}
+                    onClick={() => {
+                      setSelected(landmark.id);
+                      soundSystem.click();
+                    }}
                   >
                     <div className="lm-id">{landmark.id}</div>
                     <div className="lm-name">{landmark.name}</div>
@@ -196,13 +238,68 @@ function App() {
             <TeamDashboard />
           </div>
         )}
+
+        {tab === "analytics" && (
+          <div className="card">
+            <Analytics />
+          </div>
+        )}
+
+        {tab === "gps" && (
+          <div className="card">
+            <div className="gps-section">
+              <GPSTracker onLocationUpdate={setGpsLocation} />
+              
+              {gpsLocation && (
+                <div className="gps-info-panel">
+                  <h3>📍 Current Location</h3>
+                  <div className="gps-details">
+                    <div className="gps-detail-row">
+                      <span>Coordinates:</span>
+                      <span>{gpsLocation.lat.toFixed(6)}, {gpsLocation.lng.toFixed(6)}</span>
+                    </div>
+                    <div className="gps-detail-row">
+                      <span>Accuracy:</span>
+                      <span>±{Math.round(gpsLocation.accuracy)}m</span>
+                    </div>
+                    <div className="gps-detail-row">
+                      <span>Timestamp:</span>
+                      <span>{new Date(gpsLocation.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="gps-features">
+                <h3>🎯 GPS Features</h3>
+                <ul className="feature-list">
+                  <li>✓ Proximity-based qubit perturbation</li>
+                  <li>✓ Movement speed detection</li>
+                  <li>✓ Distance-based decay modifiers</li>
+                  <li>✓ Near-landmark stability bonuses</li>
+                  <li>✓ Anti-cheat driving detection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {tab === "admin" && (
+          <div className="card">
+            <AdminPanel />
+          </div>
+        )}
       </main>
 
       <footer className="footer">
         <div className="checkpoint">
-          ✓ Q-Find Complete: SHA-256 QR Engine · Phone Scanner · Qubit Decoherence · Live Leaderboard
+          ✓ Q-Find Complete: 20 Landmarks · GPS · WebSocket · Analytics · Admin · Sound · Mobile
         </div>
       </footer>
+
+      {showSettings && (
+        <SettingsPanel onClose={() => setShowSettings(false)} />
+      )}
     </div>
   );
 }
