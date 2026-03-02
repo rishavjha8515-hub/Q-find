@@ -1,132 +1,145 @@
+// client/src/hooks/useWebSocket.js
+// React hook for WebSocket connection
+
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const WS_URL = "ws://192.168.126.148/ws";
+const WS_URL = "ws://192.168.126.148:3000/ws"; // UPDATE WITH YOUR IP
 
-export function useWebsocket(teamId = null) {
-    const [connected, setConnected] = useState(false);
-    const [lastMessage, setLastMessage] = useState(null);
-    const [teamState, setTeamState ] = useState(null);
-    const [allteams, setAllTeams] = useState([]);
-    const wsRef = useRef(null);
-    const reconnectTimeoutRef = useRef(null);
-    
-    const connect = useCallback(() => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) return;
-    
+export function useWebSocket(teamId = null) {
+  const [connected, setConnected] = useState(false);
+  const [lastMessage, setLastMessage] = useState(null);
+  const [teamState, setTeamState] = useState(null);
+  const [allTeams, setAllTeams] = useState([]);
+  const wsRef = useRef(null);
+  const reconnectTimeoutRef = useRef(null);
+
+  const connect = useCallback(() => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) return;
+
+    try {
+      const ws = new WebSocket(WS_URL);
+      wsRef.current = ws;
+
+      ws.onopen = () => {
+        console.log("✓ WebSocket connected");
+        setConnected(true);
+
+        // Subscribe to team updates if teamId provided
+        if (teamId) {
+          ws.send(JSON.stringify({
+            type: "SUBSCRIBE",
+            teamId,
+          }));
+        }
+      };
+
+      ws.onmessage = (event) => {
         try {
-            const ws = new  WebSocket(WS_URL);
-            ws.Ref.current = ws;
+          const message = JSON.parse(event.data);
+          setLastMessage(message);
 
-            ws.onopen = () => {
-                console.log("✓ WebSocket connected");
-                setConnected(true);
+          switch (message.type) {
+            case "QUBIT_UPDATE":
+              if (message.teamId === teamId) {
+                setTeamState(message.state);
+              }
+              break;
 
-                if (teamId) {
-                    ws.send(JSON.stringify({
-                        type:"SUBSCRIBE",
-                        teamId,
-                    }));
-                }
-            };
+            case "ALL_TEAMS_UPDATE":
+              setAllTeams(message.teams || []);
+              break;
 
-            ws.onmessage = (event) => {
-                try {
-                    const message = JSON.parse(event.data);
-                    setLastMessage(message);
+            case "TEAM_STATE":
+              if (message.teamId === teamId) {
+                setTeamState(message.state);
+              }
+              break;
 
-                    switch (message.type) {
-                        case "QUBIT_UPDATE":
-                            if (message.teamId === teamId) {
-                                setTeamState(message.state);
-                            }
-                            break;
+            case "CONNECTED":
+              console.log(message.message);
+              break;
 
+            case "PONG":
+              // Heartbeat response
+              break;
 
-                            case "ALL_TEAMS_UPDATE":
-                                setAllTeams(message.teams || [] );
-                                break;
-
-                                case "TEAM_STATE":
-                                    if (message.teamId === teamId) {
-                                        setTeamState(message.state);
-                                    }
-                                    break;
-
-                                    case "CONNECTED":
-                                        console.log(message.message);
-                                        break;
-
-                                        case "PONG":
-                                            // Heartbeat response
-                                            break;
-
-                                            default:
-                                                console.log("Received:", message.type);
-                    }
-                } catch (err) {
-                    console.error("Websocket message parse error:", err);
-                }
-            };
-
-            ws.onerror = (error) => {
-                console.error("Websocket error:", error);
-            };
-
-            ws.onclose = () => {
-                console.log("✗ WebSocket disconnected");
-                setConnected(false);
-                wsRef.current = null;
-
-                reconnectTimeoutRef.current = setTimeout(()  => {
-                    console.log("Reconnecing...");
-                    connect();
-                }, 5000);
-            };
-        } catch(err) {
-            console.error("WebSocket connection error:", err);
+            default:
+              console.log("Received:", message.type);
+          }
+        } catch (err) {
+          console.error("WebSocket message parse error:", err);
         }
-    }, [teamId]);
-    
-    const disconnect = useCallback(() => {
-        if (reconnectTimeoutRef.current) {
-            clearTimeout(reconnectTimeoutRef.current);
-        }
-        if (wsRef.current) {
-            wsRef.current.close();
-            wsRef.current = null;
-        }
+      };
+
+      ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+
+      ws.onclose = () => {
+        console.log("✗ WebSocket disconnected");
         setConnected(false);
-    }, []);
+        wsRef.current = null;
 
-    const send = useCallback((message) => {
-        if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(JSON.stringify(message));
-        } else {
-            console.warn("WebSocket not connected");
-        }
-    }, []);
+        // Reconnect after 5 seconds
+        reconnectTimeoutRef.current = setTimeout(() => {
+          console.log("Reconnecting...");
+          connect();
+        }, 5000);
+      };
+    } catch (err) {
+      console.error("WebSocket connection error:", err);
+    }
+  }, [teamId]);
 
-    const requestState = useCallback (() => {
-        send({ type: "REQUEST_DATA", teamId});
-    }, [send, teamId]);
+  const disconnect = useCallback(() => {
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current);
+    }
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+    setConnected(false);
+  }, []);
 
-    useEffect(() => {
-        if (!connected) return;
+  const send = useCallback((message) => {
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify(message));
+    } else {
+      console.warn("WebSocket not connected");
+    }
+  }, []);
 
-        const interval = setInterval(() => {
-            send({ type:"PING"});
-        }, 30000);
+  const requestState = useCallback(() => {
+    send({ type: "REQUEST_STATE", teamId });
+  }, [send, teamId]);
 
-        return () => clearInterval(interval);
-    }, [connected, send]);
-
-    return {
-        connected,
-        teamState,
-        allteams,
-        lastMessage,
-        send,
-        requestState,
-        disconnect
+  // Connect on mount
+  useEffect(() => {
+    connect();
+    return () => {
+      disconnect();
     };
+  }, [connect, disconnect]);
+
+  // Heartbeat ping every 30 seconds
+  useEffect(() => {
+    if (!connected) return;
+
+    const interval = setInterval(() => {
+      send({ type: "PING" });
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [connected, send]);
+
+  return {
+    connected,
+    teamState,
+    allTeams,
+    lastMessage,
+    send,
+    requestState,
+    disconnect,
+  };
 }

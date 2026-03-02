@@ -1,0 +1,17 @@
+services:
+-type: web
+name: q-find-backend
+env: node
+region: oregon
+plan: free
+buildCommand: npm install
+startCommand: node seerver/index.js
+healthCheckPath: /api/health
+envVars:
+-key: PORT
+value: 10000
+-key: NODE_ENV
+value: production
+-key: ADMIN_PASSWORD
+generateValue: true
+

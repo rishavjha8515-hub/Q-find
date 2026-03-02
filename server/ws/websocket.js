@@ -132,7 +132,7 @@ function broadcastQubitUpadets() {
   wss.clients.forEach((client) =>{
     if (client.readyState === WebSocket.OPEN) {
         //Only send to clients not subscribed to specific teams
-        let isGlobalClient = True;
+        let isGlobalClient = true;
         for (const [, teamClients] of clients.entries()) {
             if (teamClients.has(client)) {
                 isGlobalClient = false;

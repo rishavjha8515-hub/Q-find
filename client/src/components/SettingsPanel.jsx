@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import soundSystem from "/utils/sounds";
+import soundSystem from "../utils/sounds";
 import "./SettingsPanel.css";
 
 export function SettingsPanel({ onClose }) {
@@ -121,7 +121,7 @@ export function SettingsPanel({ onClose }) {
                   min="0"
                   max="1"
                   step="0.1"
-                  value={value}
+                  value={volume}
                   onChange={changeVolume}
                   className="volume-slider"
                   />
