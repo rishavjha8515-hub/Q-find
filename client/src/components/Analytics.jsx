@@ -114,7 +114,7 @@ export function Analytics() {
             }}
           >
             <span className="bar-label">
-              {stabilityDistribution.low} (<30%)
+              {stabilityDistribution.low} ({"\u003c"}30%)
             </span>
           </div>
           <div

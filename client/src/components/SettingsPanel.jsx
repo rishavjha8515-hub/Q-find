@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import soundSystem from "../utils/sounds";
+import soundSystem from "/utils/sounds";
 import "./SettingsPanel.css";
 
 export function SettingsPanel({ onClose }) {
