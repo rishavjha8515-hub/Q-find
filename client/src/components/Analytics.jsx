@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useWebSocket } from "../hooks/useWebSocket";
 import "./Analytics.css";
 
-const API = "http://192.168.216.148:3000"; // UPDATE WITH YOUR IP
+const API = " https://q-find-backend.onrender.com";
 
 export function Analytics() {
   const { allTeams, connected } = useWebSocket();

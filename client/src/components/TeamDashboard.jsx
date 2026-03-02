@@ -1,10 +1,9 @@
-// client/src/components/TeamDashboard.jsx
 // Live team leaderboard and stats
 
 import { useState, useEffect } from "react";
 import "./TeamDashboard.css";
 
-const API = "http://192.168.126.148:3000"; // UPDATE WITH YOUR IP
+const API = " https://q-find-backend.onrender.com"; 
 
 export function TeamDashboard() {
   const [teams, setTeams] = useState([]);

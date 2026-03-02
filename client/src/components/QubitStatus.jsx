@@ -6,7 +6,7 @@ import { QubitRing } from "./Qubitring";
 import { PuzzleModal } from "./PuzzleModal";
 import "./QubitStatus.css";
 
-const API = "http://192.168.126.148:3000";; // UPDATE WITH YOUR IP
+const API = " https://q-find-backend.onrender.com";
 
 export function QubitStatus() {
   const [myTeamId, setMyTeamId] = useState("TEAM_TEST");

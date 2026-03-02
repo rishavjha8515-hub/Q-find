@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
 import "./Scanner.css";
 
-const API = "http://192.168.126.148:3000"; // UPDATE WITH YOUR IP
+const API = " https://q-find-backend.onrender.com"; 
 
 export function Scanner() {
   const videoRef = useRef(null);

@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const WS_URL = "ws://192.168.126.148:3000/ws"; // UPDATE WITH YOUR IP
+const WS_URL = "ws:// https://q-find-backend.onrender.com/ws"
 
 export function useWebSocket(teamId = null) {
   const [connected, setConnected] = useState(false);

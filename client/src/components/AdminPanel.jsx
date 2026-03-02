@@ -5,8 +5,7 @@ import { useState } from "react";
 import { useWebSocket } from "../hooks/useWebSocket";
 import "./AdminPanel.css";
 
-const API = "http://192.168.216.148:3000"; // UPDATE WITH YOUR IP
-const ADMIN_PASSWORD = "quantum2026"; // Change this!
+const API = " https://q-find-backend.onrender.com"; 
 
 export function AdminPanel() {
   const { allTeams, connected } = useWebSocket();

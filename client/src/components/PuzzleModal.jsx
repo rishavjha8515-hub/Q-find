@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./PuzzleModal.css";
 
-const API = "http://192.168.126.148:3000";
+const API = " https://q-find-backend.onrender.com";
 
 export function PuzzleModal({ teamId, onClose, onSuccess }) {
     const [puzzle, setPuzzle] = useState(null);

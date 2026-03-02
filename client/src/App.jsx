@@ -10,7 +10,7 @@ import { GPSTracker } from "./components/GPSTracker";
 import soundSystem from "./utils/sounds";
 import "./App.css";
 
-const API = "http://192.168.126.148:3000"; // UPDATE WITH YOUR IP
+const API = " https://q-find-backend.onrender.com"
 
 function App() {
   const [tab, setTab] = useState("generator");
