@@ -9,7 +9,7 @@ const {
   handleCheckIn,
   restoreQubit,
   getAllTeams,
-} = require("./qubit/engine");
+} = require("../qubit/engine");
 const { getRandomPuzzle, validateAnswer } = require("../../shared/puzzles");
 
 // GET /api/qubit/:teamId - Get team's current qubit state
