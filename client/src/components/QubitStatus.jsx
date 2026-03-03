@@ -2,7 +2,7 @@
 // Live qubit status dashboard with team monitoring
 
 import { useState, useEffect } from "react";
-import { QubitRing } from "./Qubitring";
+import { QubitRing } from "./QubitRing";
 import { PuzzleModal } from "./PuzzleModal";
 import "./QubitStatus.css";
 
