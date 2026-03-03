@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
-import "./Scanner.css";
+import "./scanner.css";
 
 const API = " https://q-find-backend.onrender.com"; 
 
