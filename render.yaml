@@ -5,7 +5,7 @@ env: node
 region: oregon
 plan: free
 buildCommand: npm install
-startCommand: node seerver/index.js
+startCommand: node server/index.js
 healthCheckPath: /api/health
 envVars:
 -key: PORT
