@@ -90,6 +90,14 @@ function handleMessage(ws, message, currentTeamId) {
       }
       break;
 
+      case "CHAT_MESSAGE":
+        broadcastToTeam(message.teamId, message);
+        break;
+
+        case "USER_TYPING":
+          broadcastToTeam(message.teamId, message)
+          break;
+
     default:
       console.log("Unknown message type:", message.type);
   }
