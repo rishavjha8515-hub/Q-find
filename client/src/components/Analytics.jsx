@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useWebSocket } from "../hooks/useWebSocket";
 import "./Analytics.css";
 
-const API = " https://q-find-backend.onrender.com";
+const API = "https://q-find-backend.onrender.com";
 
 export function Analytics() {
   const { allTeams, connected } = useWebSocket();
@@ -94,7 +94,7 @@ export function Analytics() {
             }}
           >
             <span className="bar-label">
-              {stabilityDistribution.high} (>70%)
+              {stabilityDistribution.high} (&gt;70%)
             </span>
           </div>
           <div
