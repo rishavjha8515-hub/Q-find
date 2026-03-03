@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
-import { Scanner } from "./components/Scanner";
+import { Scanner } from "./components/scanner";
 import { QubitStatus } from "./components/QubitStatus";
 import { TeamDashboard } from "./components/TeamDashboard";
 import { Analytics } from "./components/Analytics";
