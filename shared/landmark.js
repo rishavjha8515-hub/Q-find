@@ -1,8 +1,5 @@
-// shared/landmarks-extended.js
-// Extended to 20 NYC landmarks for full game
 
 const LANDMARKS = [
-  // Original 6
   {
     id: "ESB",
     name: "Empire State Building",
@@ -64,7 +61,6 @@ const LANDMARKS = [
     points: 150,
   },
   
-  // 14 new landmarks
   {
     id: "FLTN",
     name: "Flatiron Building",
