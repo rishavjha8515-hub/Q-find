@@ -1,5 +1,3 @@
-
-
 const ACHIEVEMENTS = [
   {
     id: "first_scan",
