@@ -608,7 +608,7 @@ MIT License - see [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - **Hack Club** - For organizing The Game
-- **Anthropic Claude** - AI pair programming partner
+- **Anthropic Claude** - AI pair programming partner(Used for jsx files and Readme)
 - **Research Paper** - Wave Mechanics decay model (Zenodo)
 - **NYC Landmarks** - Public domain landmark data
 
