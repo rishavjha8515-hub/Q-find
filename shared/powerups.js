@@ -1,5 +1,4 @@
-// shared/powerups.js
-// Power-ups for extended gameplay
+
 
 const POWERUPS = [
   {
