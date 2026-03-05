@@ -1,5 +1,4 @@
-// shared/achievements.js
-// Achievement system for extended gameplay
+
 
 const ACHIEVEMENTS = [
   {
